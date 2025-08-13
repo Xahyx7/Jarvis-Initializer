@@ -24,3 +24,26 @@ An advanced voice-enabled AI study assistant with Iron Man inspired Arc Reactor 
 - Entry Point: `intro.html` (Arc Reactor experience)
 - Main Interface: Voice-responsive Jarvis circle
 - Subjects: Math, Physics, Chemistry, Biology (Classes 6-12)
+- # Jarvis AI Assistant
+
+## File Structure & Order:
+
+### 1. Entry Point (Arc Reactor Intro):
+- `index.html` - Main entry page with Arc Reactor
+- `intro.css` - Arc Reactor styling  
+- `intro.js` - Bootup sequence logic
+
+### 2. Main Interface:
+- `main.html` - Chat interface after intro
+- `style.css` - Main interface styling
+- `script.js` - Chat functionality
+
+### 3. Configuration:
+- `requirements.txt` - Python dependencies
+- `.env.example` - Environment variables
+
+## Usage:
+1. Visit: https://yourusername.github.io/Jarvis-Initializer/
+2. Experience Arc Reactor intro
+3. Chat with Jarvis AI assistant
+
