@@ -138,7 +138,7 @@ class JarvisIntro {
         container.classList.add('bootup-complete');
         
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'main.html';
         }, 1000);
     }
 
