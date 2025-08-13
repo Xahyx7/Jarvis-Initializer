@@ -2,7 +2,6 @@ class JarvisAssistant {
     constructor() {
         this.isRecording = false;
         this.recognition = null;
-        
         this.initializeElements();
         this.initializeEventListeners();
         this.initializeSpeechRecognition();
@@ -95,22 +94,56 @@ class JarvisAssistant {
         this.messageInput.value = '';
         this.showTypingIndicator();
 
-        try {
-            const context = this.contextSelect.value;
-            const response = await this.callAPI('/api/chat', {
-                message: message,
-                context: context
-            });
-
+        // Simulate processing delay
+        setTimeout(() => {
             this.hideTypingIndicator();
-            this.addMessage(response.response, 'jarvis');
-            this.speak(response.response);
+            const response = this.getSmartResponse(message, this.contextSelect.value);
+            this.addMessage(response, 'jarvis');
+            this.speak(response);
+        }, 1000 + Math.random() * 2000);
+    }
 
-        } catch (error) {
-            this.hideTypingIndicator();
-            this.addMessage('Sorry, I encountered an error. Please try again.', 'jarvis');
-            console.error('Error:', error);
+    getSmartResponse(message, context) {
+        const msg = message.toLowerCase();
+        
+        // Math responses
+        if (context === 'math' || msg.includes('math') || msg.includes('equation') || msg.includes('solve')) {
+            if (msg.includes('quadratic')) return "To solve quadratic equations, use the formula: x = (-b ± √(b² - 4ac)) / 2a. For example, for x² - 5x + 6 = 0: a=1, b=-5, c=6. Solutions are x = 2 and x = 3.";
+            if (msg.includes('triangle')) return "For triangles, remember: Area = ½ × base × height. For right triangles, use Pythagoras theorem: a² + b² = c². Similar triangles have proportional sides.";
+            if (msg.includes('algebra')) return "In algebra, always isolate the variable. For linear equations like 2x + 3 = 7, subtract 3 from both sides: 2x = 4, then divide by 2: x = 2.";
+            return "I can help with mathematics! Try asking about specific topics like quadratic equations, triangles, algebra, geometry, or trigonometry. What math concept would you like to understand?";
         }
+        
+        // Science responses
+        if (context === 'science' || msg.includes('physics') || msg.includes('chemistry') || msg.includes('biology')) {
+            if (msg.includes('newton')) return "Newton's Laws: 1st Law - Objects at rest stay at rest unless acted upon by force. 2nd Law - F = ma (Force = mass × acceleration). 3rd Law - Every action has equal and opposite reaction.";
+            if (msg.includes('photosynthesis')) return "Photosynthesis: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂. Plants convert carbon dioxide and water into glucose using sunlight in chloroplasts.";
+            if (msg.includes('periodic')) return "Periodic table is organized by atomic number. Groups have similar properties. Periods show electron shells. Remember trends: atomic radius decreases across periods, increases down groups.";
+            return "I'm here for science subjects! Ask about physics laws, chemistry reactions, biology processes, or any specific scientific concepts you're studying.";
+        }
+        
+        // Test responses
+        if (context === 'test' || msg.includes('test') || msg.includes('exam') || msg.includes('question')) {
+            const tests = [
+                "**Class 10 Math Mini Test:**\n1. Solve: 2x + 5 = 13\n2. Find HCF of 18 and 24\n3. If α, β are zeros of x² - 7x + 10, find α + β\n\nTry solving these and tell me your answers!",
+                "**Physics Quick Quiz:**\n1. State Newton's first law\n2. What is the SI unit of force?\n3. Calculate force if mass = 5kg, acceleration = 2m/s²\n\nGive it a try!",
+                "**Chemistry Test:**\n1. Write formula for water\n2. What is the atomic number of carbon?\n3. Balance: H₂ + O₂ → H₂O\n\nLet's see how you do!"
+            ];
+            return tests[Math.floor(Math.random() * tests.length)];
+        }
+        
+        // Revision responses
+        if (context === 'revision' || msg.includes('revision') || msg.includes('study') || msg.includes('prepare')) {
+            return "**Revision Strategy:**\n📚 **Active Recall:** Test yourself without looking at notes\n📝 **Practice Papers:** Solve previous year questions daily\n⏰ **Spaced Repetition:** Review topics at intervals\n🎯 **Focus Areas:** Identify weak topics and practice more\n\nWhich subject would you like to revise? I can suggest specific topics and methods.";
+        }
+        
+        // Greeting responses
+        if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+            return "Hello! I'm Jarvis, your AI study assistant. I'm here to help you excel in your CBSE studies. I can assist with mathematics, science, test preparation, and revision strategies. What would you like to study today?";
+        }
+        
+        // Default intelligent response
+        return `I understand you're asking about "${message}". As your study assistant, I can help you with detailed explanations, step-by-step solutions, and practice questions. Please specify the subject (Math, Physics, Chemistry, Biology) or choose a context from the dropdown menu for more targeted assistance. What specific topic would you like to explore?`;
     }
 
     addMessage(content, sender) {
@@ -147,7 +180,7 @@ class JarvisAssistant {
         typingDiv.innerHTML = `
             <div class="message-content">
                 <div class="typing-indicator">
-                    <strong>Jarvis is thinking</strong>
+                    <strong>Jarvis is analyzing your question</strong>
                     <div class="typing-dots">
                         <span></span>
                         <span></span>
@@ -240,32 +273,16 @@ class JarvisAssistant {
 
     handleQuickAction(action) {
         const actions = {
-            'test': 'I want to take a test. Please create a test for me.',
-            'revision': 'Help me with revision. What topics should I focus on?',
-            'doubt': 'I have a doubt. Can you help me understand a concept?',
-            'practice': 'Give me some practice questions to solve.'
+            'test': 'Give me a practice test for Class 10 mathematics',
+            'revision': 'Help me create a revision plan for my upcoming exams',
+            'doubt': 'I have a doubt about quadratic equations. Can you explain?',
+            'practice': 'Give me some practice questions for physics'
         };
         
         if (actions[action]) {
             this.messageInput.value = actions[action];
             this.sendMessage();
         }
-    }
-
-    async callAPI(endpoint, data) {
-        const response = await fetch(`http://localhost:5000${endpoint}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        return await response.json();
     }
 
     updateStatus(status) {
