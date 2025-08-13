@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis - Your AI Study Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="jarvis-voice-indicator" id="jarvisVoiceIndicator">
+                    <div class="voice-core"></div>
+                    <div class="voice-ring voice-ring-1"></div>
+                    <div class="voice-ring voice-ring-2"></div>
+                    <div class="voice-ring voice-ring-3"></div>
+                    <div class="voice-pulse"></div>
+                </div>
+                <div class="logo-text">
+                    <h1>Jarvis</h1>
+                    <span class="subtitle">Your AI Study Assistant</span>
+                </div>
+            </div>
+            <div class="controls">
+                <select id="contextSelect" class="context-select">
+                    <option value="general">General</option>
+                    <option value="math">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="test">Take Test</option>
+                    <option value="revision">Revision</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="chat-container">
+            <div id="chatMessages" class="chat-messages">
+                <div class="message jarvis-message">
+                    <div class="message-content">
+                        <strong>Jarvis:</strong> Hello! I'm Jarvis, your AI study assistant. I can help you with:
+                        <ul>
+                            <li>📚 NCERT concepts and solutions</li>
+                            <li>📝 CBSE Previous Year Questions</li>
+                            <li>🧮 RS Aggarwal & RD Sharma solutions</li>
+                            <li>✅ Revision tests and mock exams</li>
+                            <li>❓ Doubt clearing with detailed explanations</li>
+                        </ul>
+                        How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="voice-controls">
+                    <button id="recordBtn" class="voice-btn" title="Voice Input">🎤</button>
+                    <button id="stopBtn" class="voice-btn stop-btn" title="Stop Recording" style="display: none;">⏹️</button>
+                </div>
+                <input type="text" id="messageInput" placeholder="Ask me anything about your studies..." class="message-input">
+                <button id="sendBtn" class="send-btn">Send</button>
+            </div>
+
+            <div class="quick-actions">
+                <button class="quick-btn" data-action="test">📝 Take Test</button>
+                <button class="quick-btn" data-action="revision">📖 Revision</button>
+                <button class="quick-btn" data-action="doubt">❓ Clear Doubt</button>
+                <button class="quick-btn" data-action="practice">🏃 Practice</button>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <span id="statusText">Ready</span>
+            <div class="connection-status" id="connectionStatus">🟢</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
