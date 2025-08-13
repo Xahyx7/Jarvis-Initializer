@@ -1,0 +1,13 @@
+{
+  "name": "jarvis-ai-assistant",
+  "version": "1.0.0",
+  "description": "Jarvis AI Study Assistant with Arc Reactor intro",
+  "main": "frontend/intro.html",
+  "scripts": {
+    "start": "python backend/app.py",
+    "dev": "python -m http.server 8000 --directory frontend"
+  },
+  "keywords": ["AI", "Education", "CBSE", "Study Assistant"],
+  "author": "Your Name",
+  "license": "MIT"
+}
